@@ -4,20 +4,70 @@
     <head>
         <title>Weather forecast</title>
         <link rel="stylesheet" href="stylesheet.css">
+        <script src="script.js" defer></script>
     </head>
 
     <body>
         <div class="video-container">
             <video autoplay muted loop id="dark-clouds">
-                <source src="resources/clouds.mov">
+                <source src="resources/thunderstorm.mp4">
             </video>
         </div>
         
         <div class="weather-container">
             <h1 class = "city-name">Cluj-Napoca</h1>
-            <h2 class = "degrees">7° C</h2>
+            <h1 class = "degrees">7°</h1>
         </div>
-        <div class = "card" id = "hourly-forecast">asd</div>
+        <div class = "card" id = "hourly-forecast">
+            <div class="forecast" id="forecast-id-1">
+                <div class="hour" id="hour-id-1"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-1">
+                <div class="temp" id="temp-id-1"></div>
+            </div>
+
+            <div class="forecast" id="forecast-id-2">
+                <div class="hour" id="hour-id-2"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-2">
+                <div class="temp" id="temp-id-2"></div>
+            </div>
+
+            <div class="forecast" id="forecast-id-3">
+                <div class="hour" id="hour-id-3"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-3">
+                <div class="temp" id="temp-id-3"></div>
+            </div>
+
+            <div class="forecast" id="forecast-id-4">
+                <div class="hour" id="hour-id-4"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-4">
+                <div class="temp" id="temp-id-4"></div>
+            </div>
+
+            <div class="forecast" id="forecast-id-5">
+                <div class="hour" id="hour-id-5"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-5">
+                <div class="temp" id="temp-id-5"></div>
+            </div>
+
+            <div class="forecast" id="forecast-id-6">
+                <div class="hour" id="hour-id-6"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-6">
+                <div class="temp" id="temp-id-6"></div>
+            </div>
+
+            <div class="forecast" id="forecast-id-7">
+                <div class="hour" id="hour-id-7"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-7">
+                <div class="temp" id="temp-id-7"></div>
+            </div>
+
+            <div class="forecast" id="forecast-id-8">
+                <div class="hour" id="hour-id-8"></div>
+                <img src="" alt="icon" class="icon" id="icon-id-8">
+                <div class="temp" id="temp-id-8"></div>
+            </div>
+
+        </div>
         <div class = "card" id = "seven-day-forecast"></div>
         <div class = "horizontal-container">
             <div class = "card" id = "Wind"></div>
