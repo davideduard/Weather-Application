@@ -5,6 +5,10 @@
     
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body{
     margin-top: 70px;
     display: flex;
@@ -45,6 +49,11 @@ body{
 .city-name {
     margin:0;
     font-size: 50px;
+}
+
+.description {
+    margin: 0;
+    font-size: 20px;
 }
 
 .degrees {

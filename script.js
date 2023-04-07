@@ -11,8 +11,10 @@ let weather = {
         const { description, icon} = data.weather[0];
         const {temp, humidity} = data.main;
         const {speed} = data.wind;
+        
         document.querySelector('.city-name').innerText = name;
         document.querySelector('.degrees').innerText = Math.floor(temp) + '°';
+        document.querySelector('.description').innerText = description;
         console.log(name, description, icon, temp, humidity, speed);
     },
 
