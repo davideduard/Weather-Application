@@ -15,6 +15,43 @@ let weather = {
         document.querySelector('.city-name').innerText = name;
         document.querySelector('.degrees').innerText = Math.floor(temp) + '°';
         document.querySelector('.description').innerText = description;
+        
+
+        var video = document.getElementById('video');
+        var source = document.createElement('source');
+
+
+        var day_time = icon.slice(2,3);
+        var new_source = "resources/";
+
+        if (main == "Clear" && day_time == "d") {
+            new_source += "sunny.mp4";
+        }
+
+        if (main == "Clear" && day_time == "n") {
+            new_source += "starry-night.mp4";
+        }
+
+        if (main == "Rain") {
+            new_source += "rain.mp4";
+        }
+
+        if (main == "Clouds" && description == "overcast clouds") {
+            new_source += "clouds.mov";
+        }
+
+        if (main == "Clouds") {
+            new_source += "sunny-clouds.mov";
+        }
+
+        if (main == "Snow") {
+            new_source += "snowfall.mp4";
+        }
+
+
+        source.setAttribute('src', new_source)
+        video.appendChild(source);
+        video.play();
     },
 
     fetchForecast: function (city) {
@@ -105,7 +142,8 @@ let weather = {
 };
 
 window.onload = function() {
-    weather.fetchWeather("Bucharest");
-    weather.fetchForecast("Bucharest");
-    weather.fetchDailyForecast("Bucharest")
+    var city = "Turin"
+    weather.fetchWeather(city);
+    weather.fetchForecast(city);
+    weather.fetchDailyForecast(city)
 };
