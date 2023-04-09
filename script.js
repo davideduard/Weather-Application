@@ -8,14 +8,13 @@ let weather = {
 
     displayWeather: function(data) {
         const { name } = data;
-        const { description, icon} = data.weather[0];
+        const { description, icon, main} = data.weather[0];
         const {temp, humidity} = data.main;
         const {speed} = data.wind;
         
         document.querySelector('.city-name').innerText = name;
         document.querySelector('.degrees').innerText = Math.floor(temp) + '°';
         document.querySelector('.description').innerText = description;
-        console.log(name, description, icon, temp, humidity, speed);
     },
 
     fetchForecast: function (city) {
@@ -46,12 +45,67 @@ let weather = {
 
             var temp = Math.floor(temps[i]);
             document.querySelector("#temp-id-" + i).innerText = temp + "°";
+        }       
+    },
 
-            console.log(hour);
+    getDayName: function(date = new Date(), locale = 'en-US') {
+        return date.toLocaleDateString(locale, {weekday: 'short'});
+    },
+
+    fetchDailyForecast: function (city) { 
+        fetch(
+            "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=metric&appid=" + this.apiKey
+        ).then((response) => response.json()).then((data) => this.displayDailyForecast(data))
+    },
+
+    displayDailyForecast: function(data) {
+
+        var curent_date = "";
+        var min_temp = data.list[0].main.temp_min;
+        var max_temp = data.list[0].main.temp_max;
+        const min_temps = [];
+        const max_temps = [];
+        const icons = [];
+        const dates = [];
+        var step = 0;
+        
+
+        //we search for min and max temps, day icons and we save the dates for the different days
+        for (let i=1; i<40; i++) {
+            var date_step = data.list[i].dt_txt.split(" ");
+            if (curent_date[0] != date_step[0]){
+                min_temps[step] = Math.round(min_temp);
+                max_temps[step] = Math.round(max_temp);
+                dates[step] = curent_date[0];
+                step += 1;
+
+                curent_date = data.list[i].dt_txt.split(" ");
+                min_temp = data.list[i].main.temp_min;
+                max_temp = data.list[i].main.temp_max;
+            }
+            else {
+                if (data.list[i].main.temp_min < min_temp)
+                    min_temp = data.list[i].main.temp_min;
+                if (data.list[i].main.temp_max > max_temp)
+                    max_temp = data.list[i].main.temp_max;
+                if (data.list[i].sys.pod == "d"){
+                    icons[step] = data.list[i].weather[0].icon
+                }
+            }
         }
 
-
-        console.log(temps, dates,icons);
-        
+        //we display the information provided earlier
+        for (let i=1;i<=4;i++) {
+            document.querySelector('#day-id-' + i).innerText = this.getDayName(new Date(dates[i]));
+            document.querySelector('#low-id-' + i).innerText = "L: " + min_temps[i] + "°";
+            document.querySelector('#high-id-' + i).innerText = "H: " + max_temps[i] + "°";
+            document.querySelector("#day-icon-id-" + i).src = "https://openweathermap.org/img/wn/" + icons[i] + "@2x.png" 
+        }
     }
+};
+
+window.onload = function() {
+    weather.fetchWeather("Bucharest");
+    weather.fetchForecast("Bucharest");
+    weather.fetchDailyForecast("Bucharest")
 };

@@ -68,7 +68,6 @@ body{
     border: 2px solid rgba(255, 255, 255, 0.027);
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: left;
     border-radius: 18px;
     backdrop-filter: blur(20px);
@@ -89,6 +88,10 @@ body{
 
 #seven-day-forecast {
     min-height: 55vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
 }
 
 #hourly-forecast {
@@ -97,13 +100,20 @@ body{
     gap: 50px;
     justify-content: left;
     overflow: hidden;
-    padding-left: 30px;
+}
 
+#forecast-id-1 {
+    margin-left: 20px;
 }
 
 .icon {
     width: 50px;
     height: 50px;
+}
+
+.day-icon {
+    width: 60px;
+    height: 60px;
 }
 
 .forecast {
@@ -112,6 +122,22 @@ body{
     justify-content: center;
     align-items: center;
     font-size: 16px;
+}
+
+.low {
+    opacity: 60%;
+}
+
+
+.daily-forecast {
+    padding: 30px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+    justify-content: left;
+    font-family: Kyoc, monospace;
 }
 
 .weather-container {
