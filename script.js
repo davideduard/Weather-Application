@@ -1,20 +1,22 @@
 let weather = {
     apiKey: "0217920b74c05bcbb0c87706688f4788",
-    fetchWeather: function (city) {
+    fetchWeather: function (lat, lon) {
         fetch(
-            "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + this.apiKey
+            "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + this.apiKey
         ).then((response) => response.json()).then((data) => this.displayWeather(data));
     },
 
     displayWeather: function(data) {
         const { name } = data;
-        const { description, icon, main} = data.weather[0];
-        const {temp, humidity} = data.main;
-        const {speed} = data.wind;
+        const { description, icon, main } = data.weather[0];
+        const { temp, humidity } = data.main;
+        const { speed } = data.wind;
         
         document.querySelector('.city-name').innerText = name;
-        document.querySelector('.degrees').innerText = Math.floor(temp) + '°';
+        document.querySelector('.degrees').innerText = Math.round(temp) + '°';
         document.querySelector('.description').innerText = description;
+        document.querySelector('.wind').innerText = Math.round(speed) + "Km/h Wind speed";
+        document.querySelector('.humidity').innerText = Math.round(humidity) + "% Humidity";
         
 
         var video = document.getElementById('video');
@@ -40,12 +42,20 @@ let weather = {
             new_source += "clouds.mov";
         }
 
-        if (main == "Clouds") {
-            new_source += "sunny-clouds.mov";
+        if (main == "Clouds" && day_time == "d") {
+            new_source += "test.mov";
+        }
+
+        if (main == "Clouds" && day_time == "n") {
+            new_source += "night-clouds.mov";
         }
 
         if (main == "Snow") {
             new_source += "snowfall.mp4";
+        }
+
+        if (main == "Thunderstorm") {
+            new_source += "thunderstorm.mp4"
         }
 
 
@@ -54,9 +64,9 @@ let weather = {
         video.play();
     },
 
-    fetchForecast: function (city) {
+    fetchForecast: function (lat, lon) {
         fetch(
-            "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=metric&appid=" + this.apiKey
+            "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + this.apiKey
         ).then((response) => response.json()).then((data) => this.display3HourForecast(data))
     },
 
@@ -89,9 +99,9 @@ let weather = {
         return date.toLocaleDateString(locale, {weekday: 'short'});
     },
 
-    fetchDailyForecast: function (city) { 
+    fetchDailyForecast: function (lat, lon) { 
         fetch(
-            "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=metric&appid=" + this.apiKey
+            "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + this.apiKey
         ).then((response) => response.json()).then((data) => this.displayDailyForecast(data))
     },
 
@@ -103,7 +113,8 @@ let weather = {
         const min_temps = [];
         const max_temps = [];
         const icons = [];
-        const dates = [];
+        var dates = [];
+        const descriptions = [];
         var step = 0;
         
 
@@ -111,6 +122,7 @@ let weather = {
         for (let i=1; i<40; i++) {
             var date_step = data.list[i].dt_txt.split(" ");
             if (curent_date[0] != date_step[0]){
+
                 min_temps[step] = Math.round(min_temp);
                 max_temps[step] = Math.round(max_temp);
                 dates[step] = curent_date[0];
@@ -119,16 +131,24 @@ let weather = {
                 curent_date = data.list[i].dt_txt.split(" ");
                 min_temp = data.list[i].main.temp_min;
                 max_temp = data.list[i].main.temp_max;
+                
             }
             else {
                 if (data.list[i].main.temp_min < min_temp)
                     min_temp = data.list[i].main.temp_min;
                 if (data.list[i].main.temp_max > max_temp)
                     max_temp = data.list[i].main.temp_max;
-                if (data.list[i].sys.pod == "d"){
-                    icons[step] = data.list[i].weather[0].icon
-                }
             }
+
+            if (data.list[i].sys.pod == "d" && (date_step[1] == "00:00:00" || date_step[1] == "12:00:00")) {
+                icons[step] = data.list[i].weather[0].icon;
+                descriptions[step] = data.list[i].weather[0].description;
+            }
+        }
+        
+        //if the clock goes over some hour, the dates don't log the first date
+        if (dates.length == 6){
+            dates.shift()
         }
 
         //we display the information provided earlier
@@ -136,14 +156,23 @@ let weather = {
             document.querySelector('#day-id-' + i).innerText = this.getDayName(new Date(dates[i]));
             document.querySelector('#low-id-' + i).innerText = "L: " + min_temps[i] + "°";
             document.querySelector('#high-id-' + i).innerText = "H: " + max_temps[i] + "°";
-            document.querySelector("#day-icon-id-" + i).src = "https://openweathermap.org/img/wn/" + icons[i] + "@2x.png" 
+            document.querySelector("#day-icon-id-" + i).src = "https://openweathermap.org/img/wn/" + icons[i] + "@2x.png"
+            document.querySelector("#desc-id-" + i).innerText = descriptions[i];
         }
     }
 };
 
+const success = (position) => {
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+
+    lon = "4.8897"
+    lat =  "52.374"
+    weather.fetchWeather(lat, lon)
+    weather.fetchForecast(lat, lon);
+    weather.fetchDailyForecast(lat, lon)
+};
+
 window.onload = function() {
-    var city = "Turin"
-    weather.fetchWeather(city);
-    weather.fetchForecast(city);
-    weather.fetchDailyForecast(city)
+    navigator.geolocation.getCurrentPosition(success)
 };
