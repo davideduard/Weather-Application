@@ -59,6 +59,11 @@ let weather = {
             weather.new_source = "resources/thunderstorm.mp4"
         }
 
+        //i have not made different video for those conditions :)
+        if (main == "Mist" || main == "Smoke" || main == "Haze" || main == "Dust" || main == "Fog" || main == "Sand" || main == "Dust" || main == "Ash" || main == "Squall" || main == "Tornado") {
+            weather.new_source = "resources/fog.mov";
+        }
+
         let existingSource = video.querySelector('source');
         if (existingSource) {
             video.removeChild(existingSource);
