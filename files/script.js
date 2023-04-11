@@ -40,15 +40,15 @@ let weather = {
         }
 
         if (main == "Clouds" && description == "overcast clouds") {
-            weather.new_source = "resources/clouds.mov";
+            weather.new_source = "resources/clouds.mp4";
         }
 
         if (main == "Clouds" && day_time == "d") {
-            weather.new_source = "resources/test.mov";
+            weather.new_source = "resources/sunny-clouds.mp4";
         }
 
         if (main == "Clouds" && day_time == "n") {
-            weather.new_source = "resources/night-clouds.mov";
+            weather.new_source = "resources/night-clouds.mp4";
         }
 
         if (main == "Snow") {
