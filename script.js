@@ -68,7 +68,10 @@ let weather = {
 
         source.setAttribute('src', weather.new_source)
         video.appendChild(source);
-        video.play();
+        video.load();
+        video.addEventListener('canplaythrough', function (){
+            video.play();
+        });
     },
 
     fetchForecast: function (lat, lon) {
