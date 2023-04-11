@@ -145,6 +145,7 @@ body {
     overflow: hidden;
 }
 
+
 #forecast-id-1 {
     margin-left: 20px;
 }
@@ -211,7 +212,14 @@ body {
     justify-content: left;
     margin-top: 20px;
     margin-bottom: 20px;
+    overflow-x: auto;
+    margin-right:20px;
 }
+
+.hourly-forecast-container::-webkit-scrollbar {
+    background-color: transparent;
+}
+
 
 .day-text {
     margin: 10px 1px 0px 1px;

@@ -1,10 +1,13 @@
 let weather = {
     apiKey: "0217920b74c05bcbb0c87706688f4788",
+    new_source: "",
+
     fetchWeather: function (lat, lon) {
         fetch(
             "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + this.apiKey
         ).then((response) => response.json()).then((data) => this.displayWeather(data));
     },
+
 
     displayWeather: function(data) {
         const { name } = data;
@@ -19,47 +22,51 @@ let weather = {
         document.querySelector('.humidity').innerText = Math.round(humidity) + "% Humidity";
         
 
-        var video = document.getElementById('video');
-        var source = document.createElement('source');
+        let video = document.getElementById('video');
 
-
-        var day_time = icon.slice(2,3);
-        var new_source = "resources/";
+        let day_time = icon.slice(2,3);
+        this.new_source = "";
 
         if (main == "Clear" && day_time == "d") {
-            new_source += "sunny.mp4";
+            weather.new_source = "resources/sunny.mp4";
         }
 
         if (main == "Clear" && day_time == "n") {
-            new_source += "starry-night.mp4";
+            weather.new_source = "resources/starry-night.mp4";
         }
 
-        if (main == "Rain") {
-            new_source += "rain.mp4";
+        if (main == "Rain" || main=="Drizzle") {
+            weather.new_source = "resources/rain.mp4";
         }
 
         if (main == "Clouds" && description == "overcast clouds") {
-            new_source += "clouds.mov";
+            weather.new_source = "resources/clouds.mov";
         }
 
         if (main == "Clouds" && day_time == "d") {
-            new_source += "test.mov";
+            weather.new_source = "resources/test.mov";
         }
 
         if (main == "Clouds" && day_time == "n") {
-            new_source += "night-clouds.mov";
+            weather.new_source = "resources/night-clouds.mov";
         }
 
         if (main == "Snow") {
-            new_source += "snowfall.mp4";
+            weather.new_source = "resources/snowfall.mp4";
         }
 
         if (main == "Thunderstorm") {
-            new_source += "thunderstorm.mp4"
+            weather.new_source = "resources/thunderstorm.mp4"
         }
 
+        let existingSource = video.querySelector('source');
+        if (existingSource) {
+            video.removeChild(existingSource);
+        }
 
-        source.setAttribute('src', new_source)
+        let source = document.createElement('source');
+
+        source.setAttribute('src', weather.new_source)
         video.appendChild(source);
         video.play();
     },
@@ -146,9 +153,12 @@ let weather = {
             }
         }
         
+
         //if the clock goes over some hour, the dates don't log the first date
         if (dates.length == 6){
-            dates.shift()
+            dates.shift();
+            icons.shift();
+            descriptions.shift();
         }
 
         //we display the information provided earlier
@@ -159,15 +169,34 @@ let weather = {
             document.querySelector("#day-icon-id-" + i).src = "https://openweathermap.org/img/wn/" + icons[i] + "@2x.png"
             document.querySelector("#desc-id-" + i).innerText = descriptions[i];
         }
+    },
+
+    search: function() {
+        const city = document.querySelector("#search-bar").value;
+        document.querySelector("#search-bar").value = "";
+        
+        fetch(
+            "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=5&appid=" + this.apiKey
+        ).then((response) => response.json()).then((data) => {
+            
+            weather.fetchWeather(data[0].lat, data[0].lon)
+            weather.fetchForecast(data[0].lat, data[0].lon)
+            weather.fetchDailyForecast(data[0].lat, data[0].lon)
+        })
+    
     }
 };
+
+document.addEventListener("keydown", (event) => {
+    if (event.key == "Enter"){
+        weather.search();
+    }
+})
 
 const success = (position) => {
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
 
-    lon = "4.8897"
-    lat =  "52.374"
     weather.fetchWeather(lat, lon)
     weather.fetchForecast(lat, lon);
     weather.fetchDailyForecast(lat, lon)
