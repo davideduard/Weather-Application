@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Weather forecast</title>
+        <link rel="stylesheet" href="stylesheet.css">
+        <script src="script.js" defer></script>
+    </head>
+
+    <body>
+        
+        
+        <div class="container">
+            <div class="video-container">
+                <video autoplay muted loop id="video">
+                    <source src="">
+                </video>
+            </div>
+
+            <div class="search">
+                <div class="search-textbox"><input type="search" id="search-bar" placeholder="Search"></div>
+            </div>
+
+            <div class="weather-container">
+                <div class = "city-name-container">
+                    <h1 class = "arrow" id="left"><</h1>
+                    <h1 class = "city-name">Cluj-Napoca</h1>
+                    <h1 class = "arrow" id="right">></h1>
+                </div>
+                
+                <h1 class = "degrees">7°</h1>
+                <h1 class = "description"></h1>
+            </div>
+            
+            <div class = "card" id = "hourly-forecast">
+
+                <div class="day-text">Hourly Forecast</div>
+
+                <div class="hourly-forecast-container">
+                    <div class="forecast" id="forecast-id-1">
+                        <div class="hour" id="hour-id-1"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-1">
+                        <div class="temp" id="temp-id-1"></div>
+                    </div>
+    
+                    <div class="forecast" id="forecast-id-2">
+                        <div class="hour" id="hour-id-2"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-2">
+                        <div class="temp" id="temp-id-2"></div>
+                    </div>
+    
+                    <div class="forecast" id="forecast-id-3">
+                        <div class="hour" id="hour-id-3"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-3">
+                        <div class="temp" id="temp-id-3"></div>
+                    </div>
+    
+                    <div class="forecast" id="forecast-id-4">
+                        <div class="hour" id="hour-id-4"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-4">
+                        <div class="temp" id="temp-id-4"></div>
+                    </div>
+    
+                    <div class="forecast" id="forecast-id-5">
+                        <div class="hour" id="hour-id-5"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-5">
+                        <div class="temp" id="temp-id-5"></div>
+                    </div>
+    
+                    <div class="forecast" id="forecast-id-6">
+                        <div class="hour" id="hour-id-6"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-6">
+                        <div class="temp" id="temp-id-6"></div>
+                    </div>
+    
+                    <div class="forecast" id="forecast-id-7">
+                        <div class="hour" id="hour-id-7"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-7">
+                        <div class="temp" id="temp-id-7"></div>
+                    </div>
+    
+                    <div class="forecast" id="forecast-id-8">
+                        <div class="hour" id="hour-id-8"></div>
+                        <img src="" alt="icon" class="icon" id="icon-id-8">
+                        <div class="temp" id="temp-id-8"></div>
+                    </div>
+                </div>
+
+            </div>
+    
+            <div class = "card" id = "seven-day-forecast">
+                <div class="day-text">Daily Forecast</div>
+    
+                <div class="daily-forecast" id="daily-id-1">
+                    <div class="day" id="day-id-1"></div>
+                    <img src="" alt="icon" class="day-icon" id="day-icon-id-1">
+                    <div class="low" id="low-id-1"></div>
+                    <div class="high" id="high-id-1"></div>
+                    <div class="desc" id="desc-id-1"></div>
+                </div>
+    
+                <div class="daily-forecast" id="daily-id-2">
+                    <div class="day" id="day-id-2"></div>
+                    <img src="" alt="icon" class="day-icon" id="day-icon-id-2">
+                    <div class="low" id="low-id-2"></div>
+                    <div class="high" id="high-id-2"></div>
+                    <div class="desc" id="desc-id-2"></div>
+                </div>
+    
+                <div class="daily-forecast" id="daily-id-3">
+                    <div class="day" id="day-id-3"></div>
+                    <img src="" alt="icon" class="day-icon" id="day-icon-id-3">
+                    <div class="low" id="low-id-3"></div>
+                    <div class="high" id="high-id-3"></div>
+                    <div class="desc" id="desc-id-3"></div>
+                </div>
+    
+                <div class="daily-forecast" id="daily-id-4">
+                    <div class="day" id="day-id-4"></div>
+                    <img src="" alt="icon" class="day-icon" id="day-icon-id-4">
+                    <div class="low" id="low-id-4"></div>
+                    <div class="high" id="high-id-4"></div>
+                    <div class="desc" id="desc-id-4"></div>
+                </div>
+    
+            </div>
+    
+            <div class = "horizontal-container">
+                <div class = "card" id = "Wind">
+                    <div class="day-text">Wind</div>
+
+                    <div class="data-container">
+                        <img src="resources/wind.png" alt="wind-icon" id="wind-icon" width="130px" height="120px">
+                        <div class="wind"></div>
+                    </div>
+                </div>
+
+                <div class = "card" id = "Humidity">
+                    <div class="day-text">Humidity</div>
+
+                    <div class="data-container">
+                        <img src="resources/humidity.png" alt="humidity-icon" id="humidity-icon" width="120px" height="120px">
+                        <div class="humidity"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
